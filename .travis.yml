@@ -5,3 +5,14 @@ before_install:
   - docker build -t pflaz/docker-react -f Dockerfile.dev .
 script:
   - docker run -e CI=true pflaz/docker-react npm run test
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-central-1"
+  app: "docker"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-eu-central-1-666356009380"
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
